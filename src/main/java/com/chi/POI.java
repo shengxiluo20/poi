@@ -27,7 +27,7 @@ public class POI {
         String str = null;
         while((str = br.readLine()) != null) {
             sb.append(str+"/n");
-            System.out.println(str);
+            //System.out.println(str);
         }
 
         Map<String, Integer> paramsa = new HashMap<String, Integer>();
@@ -42,7 +42,6 @@ public class POI {
 
         br.close();
         reader.close();
-
 
         OutputStream os = new FileOutputStream("D:\\sdlfj\\write.docx");
         doc.write(os);
@@ -76,13 +75,14 @@ public class POI {
             }
         }
         System.out.println("所有出现过的的单词"+objects.toString());
+        System.out.println("");
         Iterator it = params.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
             String key = (String)entry.getKey();
             Integer value = (Integer)entry.getValue();
             if(!"".equals(key) && value!=null && value>0){
-                System.out.println(key +"出现了" +value +"次");
+                System.out.println(key +"    出现了    " +value +"    次");
             }
         }
     }

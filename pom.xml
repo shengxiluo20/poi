@@ -39,7 +39,7 @@
                         <configuration>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.kuliao.demo</mainClass>
+                                    <mainClass>com.chi.POI</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
