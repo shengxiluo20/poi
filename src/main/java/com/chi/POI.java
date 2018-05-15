@@ -35,7 +35,7 @@ public class POI {
         String s = sb.toString();
         String[] split = s.split(",");
         for (String s1 : split) {
-            paramsa.put(s1,0);
+            paramsa.put(s1.toLowerCase(),0);
         }
 
         poi.replace(doc, paramsa);
@@ -64,7 +64,7 @@ public class POI {
             String paragraphText = para.getParagraphText();
             String[] split = paragraphText.split(" ");
             for (String s : split) {
-                s = s.replaceAll("[\\pP‘’“”]", "");
+                s = s.replaceAll("[\\pP‘’“”]", "").toLowerCase();
                 if (params.containsKey(s)) {
                     Integer integer = params.get(s);
                     params.put(s,++integer);
