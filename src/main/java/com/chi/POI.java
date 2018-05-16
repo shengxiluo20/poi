@@ -74,15 +74,15 @@ public class POI {
 
             }
         }
-        System.out.println("所有出现过的的单词"+objects.toString());
-        System.out.println("");
+        System.out.println("所有出现过的的单词:"+objects.toString());
+        System.out.println("==================================");
         Iterator it = params.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
             String key = (String)entry.getKey();
             Integer value = (Integer)entry.getValue();
             if(!"".equals(key) && value!=null && value>0){
-                System.out.println(key +"    出现了    " +value +"    次");
+                System.out.println(key +"    出现了 " +value +" 次");
             }
         }
     }

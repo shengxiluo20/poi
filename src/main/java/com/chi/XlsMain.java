@@ -55,7 +55,7 @@ public class XlsMain {
             for (int i = 0; i < wb.getNumberOfSheets(); i++) {
                 sheet = wb.getSheetAt(i);
                 //循环遍历每个sheet表的没行数据
-                for (int j = 1; j < sheet.getPhysicalNumberOfRows(); j++) {
+                for (int j = 0; j < sheet.getPhysicalNumberOfRows(); j++) {
                     row = sheet.getRow(j);
                     //用迭代遍历，因为我看见它有一个iterator（）方法
                     try {
