@@ -4,11 +4,17 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -16,75 +22,61 @@ import java.util.List;
  **/
 public class XlsMain {
 
+    private Workbook wb;
+    private FileInputStream fis;
+    public Workbook createWorkbook(String filePath) throws IOException{
+        if(filePath != null){
+            fis = new FileInputStream(filePath);
+            if(filePath.endsWith(".xls")){
+                //2003版本的excel，用.xls结尾
+                wb = new HSSFWorkbook(fis);//得到工作簿
+            }else if(filePath.endsWith(".xlsx")){
+                //2007版本的excel，用.xlsx结尾
+                wb = new XSSFWorkbook(fis);//得到工作簿
+            }else{
+            }
+            return wb;
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
 
-        XlsMain xlsMain = new XlsMain();
-        XlsDto xls = null;
+        XlsMain ddl = new XlsMain();
+        Workbook wb = null;
         try {
-            List<XlsDto> list = xlsMain.readXls();
+            wb = ddl.createWorkbook("D:\\sdlfj\\学科词汇.xls");
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
+        ddl.doSomething(wb);
     }
 
 
-
-    /**
-     * 读取xls文件内容
-     *
-     * @return List<XlsDto>对象
-     * @throws IOException
-     *       输入/输出(i/o)异常
-     */
-    private List<XlsDto> readXls() throws IOException {
-        InputStream is = new FileInputStream("D:\\sdlfj\\学科词汇.xls");
-        HSSFWorkbook hssfWorkbook = new HSSFWorkbook(is);
-        XlsDto xlsDto = null;
-        List<XlsDto> list = new ArrayList<XlsDto>();
-        // 循环工作表Sheet
-
-
-
-        for (int numSheet = 0; numSheet < hssfWorkbook.getNumberOfSheets(); numSheet++) {
-            HSSFSheet hssfSheet = hssfWorkbook.getSheetAt(numSheet);
-            if (hssfSheet == null) {
-                continue;
-            }
-            // 循环行Row
-            for (int rowNum = 0; rowNum <= hssfSheet.getLastRowNum(); rowNum++) {
-                HSSFRow hssfRow = hssfSheet.getRow(rowNum);
-                if (hssfRow == null) {
-                    continue;
+    public void doSomething(Workbook wb){
+        if(wb != null){
+            Sheet sheet;
+            Row row;
+            //一个工作簿可能不止一个sheet表格
+            for(int i = 0; i < wb.getNumberOfSheets(); i ++){
+                sheet = wb.getSheetAt(i);
+                //循环遍历每个sheet表的没行数据
+                for(int j = 1; j < sheet.getPhysicalNumberOfRows(); j ++){
+                    row = sheet.getRow(j);
+                    //用迭代遍历，因为我看见它有一个iterator（）方法
+                    try {
+                        for(Iterator<Cell> cell = row.iterator(); cell.hasNext() ;){
+                            System.out.print( cell.next().toString() + "  ");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println();
                 }
-                xlsDto = new XlsDto();
-                // 循环列Cell
-                // 0学号 1姓名 2学院 3课程名 4 成绩
-                // for (int cellNum = 0; cellNum <=4; cellNum++) {
-                HSSFCell xh = hssfRow.getCell(0);
-                if (xh == null) {
-                    continue;
-                }
-                //System.out.println(getValue(xh));
-                System.out.println(numSheet + "===" + rowNum);
             }
         }
-        return list;
     }
 
-    @SuppressWarnings("static-access")
-    private String getValue(HSSFCell hssfCell) {
-        if (hssfCell.getCellType() == hssfCell.CELL_TYPE_BOOLEAN) {
-            // 返回布尔类型的值
-            return String.valueOf(hssfCell.getBooleanCellValue());
-        } else if (hssfCell.getCellType() == hssfCell.CELL_TYPE_NUMERIC) {
-            // 返回数值类型的值
-            return String.valueOf(hssfCell.getNumericCellValue());
-        } else {
-            // 返回字符串类型的值
-            return String.valueOf(hssfCell.getStringCellValue());
-        }
-    }
+
 
 }
