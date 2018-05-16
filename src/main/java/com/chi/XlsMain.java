@@ -10,6 +10,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @author chi  2018-05-15 15:51
@@ -34,7 +36,7 @@ public class XlsMain {
         }
         return null;
     }
-
+/*
     public static void main(String[] args) {
 
         XlsMain ddl = new XlsMain();
@@ -45,9 +47,11 @@ public class XlsMain {
             e.printStackTrace();
         }
         ddl.doSomething(wb);
-    }
+    }*/
 
-    public void doSomething(Workbook wb) {
+    public Map<String, Integer> doSomething(Workbook wb) {
+        System.out.println("读取excel的数据:");
+        TreeMap<String, Integer> treeMap = new TreeMap<String, Integer>();
         if (wb != null) {
             Sheet sheet;
             Row row;
@@ -60,15 +64,18 @@ public class XlsMain {
                     //用迭代遍历，因为我看见它有一个iterator（）方法
                     try {
                         for (Iterator<Cell> cell = row.iterator(); cell.hasNext(); ) {
+                            treeMap.put(cell.next().toString().trim().toLowerCase(),0);
                             System.out.print(cell.next().toString() + "  ");
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    System.out.println();
+
                 }
             }
         }
+        System.out.println("============================");
+        return treeMap;
     }
 
 }

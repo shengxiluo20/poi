@@ -1,6 +1,7 @@
 package com.chi;
 
 import org.apache.commons.codec.binary.StringUtils;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.util.StringUtil;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
@@ -21,27 +22,29 @@ public class POI {
         InputStream is = new FileInputStream(filePath);
         XWPFDocument doc = new XWPFDocument(is);
 
-        StringBuffer sb= new StringBuffer("");
+        /*StringBuffer sb= new StringBuffer("");
         FileReader reader = new FileReader("D:\\sdlfj\\word list 1.txt");
         BufferedReader br = new BufferedReader(reader);
         String str = null;
         while((str = br.readLine()) != null) {
             sb.append(str+"/n");
             //System.out.println(str);
-        }
+        }*/
 
-        Map<String, Integer> paramsa = new HashMap<String, Integer>();
-
-        String s = sb.toString();
-        String[] split = s.split(",");
-        for (String s1 : split) {
-            paramsa.put(s1.toLowerCase(),0);
+        XlsMain ddl = new XlsMain();
+        Workbook wb = null;
+        try {
+            wb = ddl.createWorkbook("D:\\sdlfj\\学科词汇.xls");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        Map<String, Integer> paramsa = ddl.doSomething(wb);
+
+
+
 
         poi.replace(doc, paramsa);
 
-        br.close();
-        reader.close();
 
         OutputStream os = new FileOutputStream("D:\\sdlfj\\write.docx");
         doc.write(os);
