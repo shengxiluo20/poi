@@ -17,8 +17,31 @@ import java.util.regex.Matcher;
 public class POI {
 
     public static void main(String[] args) throws Exception {
+
+        String property = System.getProperty("user.dir");
+        System.out.println(property);
+
+        System.out.println("输入word文件名：");
+        Scanner scan = new Scanner(System.in);
+        // 判断是否还有输入
+        String str1="";
+        if (scan.hasNext()) {
+            str1= scan.next();
+            System.out.println("输入word文件名数据为：" + str1);
+        }
+
+        System.out.println("输入excel文件名：");
+        // 判断是否还有输入
+        String str2="";
+        if (scan.hasNext()) {
+            str2= scan.next();
+            System.out.println("输入excel文件名数据为：" + str2);
+        }
+        scan.close();
+
+
         POI poi = new POI();
-        String filePath = "D:\\sdlfj\\【V1】World Lit Text.docx";
+        String filePath = property + "/" + str1;
         InputStream is = new FileInputStream(filePath);
         XWPFDocument doc = new XWPFDocument(is);
 
@@ -34,7 +57,7 @@ public class POI {
         XlsMain ddl = new XlsMain();
         Workbook wb = null;
         try {
-            wb = ddl.createWorkbook("D:\\sdlfj\\学科词汇.xls");
+            wb = ddl.createWorkbook(property + "/" + str2);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -78,6 +101,7 @@ public class POI {
             }
         }
         System.out.println("所有出现过的的单词:"+objects.toString());
+        System.out.println("共匹配出" + objects.size() + "个单词");
         System.out.println("==================================");
         Iterator it = params.entrySet().iterator();
         while (it.hasNext()) {

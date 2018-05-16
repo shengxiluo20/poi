@@ -64,16 +64,20 @@ public class XlsMain {
                     //用迭代遍历，因为我看见它有一个iterator（）方法
                     try {
                         for (Iterator<Cell> cell = row.iterator(); cell.hasNext(); ) {
-                            treeMap.put(cell.next().toString().trim().toLowerCase(),0);
-                            System.out.print(cell.next().toString() + "  ");
+                            String s = cell.next().toString().trim().toLowerCase();
+                            treeMap.put(s,0);
+                            System.out.print(s + "  ");
+
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
+                    System.out.println();
                 }
             }
         }
+        System.out.println();
+        System.out.println("excel中共读出"+ treeMap.size() +"个单词");
         System.out.println("============================");
         return treeMap;
     }
