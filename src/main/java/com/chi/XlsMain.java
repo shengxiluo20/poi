@@ -36,19 +36,12 @@ public class XlsMain {
         }
         return null;
     }
-/*
-    public static void main(String[] args) {
 
-        XlsMain ddl = new XlsMain();
-        Workbook wb = null;
-        try {
-            wb = ddl.createWorkbook("D:\\sdlfj\\学科词汇.xls");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        ddl.doSomething(wb);
-    }*/
-
+    /**
+     * 遍历excel文件,返回所有的单词
+     * @param wb
+     * @return
+     */
     public Map<String, Integer> doSomething(Workbook wb) {
         System.out.println("读取excel的数据:");
         TreeMap<String, Integer> treeMap = new TreeMap<String, Integer>();
